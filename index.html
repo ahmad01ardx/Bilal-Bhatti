@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilal ❤️ — Friendship Forever</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;font-family:Arial,sans-serif;color:#fff;overflow-x:hidden;
+  background:radial-gradient(circle at 50% 20%,#4b1638 0,#180b24 38%,#07040f 100%);
+}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:-2}
+.glow{position:fixed;width:260px;height:260px;border-radius:50%;filter:blur(90px);opacity:.35;z-index:-1}
+.g1{background:#ff3f91;top:5%;left:-80px}.g2{background:#7b5cff;right:-90px;bottom:5%}
+main{max-width:900px;margin:auto;padding:55px 20px 80px;text-align:center}
+.badge{display:inline-block;padding:9px 18px;border:1px solid #ffffff35;border-radius:30px;background:#ffffff10;backdrop-filter:blur(10px);font-size:13px;letter-spacing:2px}
+h1{font-size:clamp(48px,12vw,100px);margin:22px 0 8px;text-shadow:0 0 35px #ff4e9b80}
+.subtitle{font-size:clamp(17px,4vw,25px);opacity:.9}
+.typing{min-height:30px;margin-top:14px;color:#ffd5e9}
+.card{
+  margin:40px auto 0;max-width:700px;padding:25px;border:1px solid #ffffff22;
+  border-radius:28px;background:#ffffff0d;backdrop-filter:blur(16px);
+  box-shadow:0 20px 70px #0008;
+}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:25px}
+.photo{width:100%;height:420px;object-fit:cover;border-radius:22px;border:1px solid #ffffff25;transition:.5s;box-shadow:0 12px 40px #0007}
+.photo:hover{transform:translateY(-8px) scale(1.02)}
+.message{font-size:19px;line-height:1.8;margin:25px auto;max-width:620px}
+.heart{font-size:45px;animation:pulse 1.5s infinite}
+button{
+  border:0;border-radius:999px;padding:14px 23px;margin:8px;color:#fff;font-weight:bold;
+  background:linear-gradient(135deg,#ff3f91,#8d63ff);cursor:pointer;
+  box-shadow:0 10px 30px #ff3f9140;transition:.3s
+}
+button:hover{transform:translateY(-3px) scale(1.03)}
+footer{margin-top:55px;opacity:.65;font-size:13px}
+.hidden-message{display:none;margin-top:22px;font-size:22px;color:#ffd5e9;animation:fadeIn .8s}
+.music-note{font-size:13px;opacity:.75;margin-top:7px}
+@keyframes pulse{50%{transform:scale(1.15)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:650px){
+  main{padding-top:35px}.photos{grid-template-columns:1fr}.photo{height:430px}
+  .card{padding:18px}.message{font-size:17px}
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="glow g1"></div><div class="glow g2"></div>
+
+<main>
+  <div class="badge">A LITTLE SURPRISE FOR</div>
+  <h1>Bilal ❤️</h1>
+  <div class="subtitle">Friendship that deserves its own little world ✨</div>
+  <div class="typing" id="typing"></div>
+
+  <section class="card">
+    <div class="heart">💖</div>
+    <p class="message">
+      Some people come into life and simply become part of your memories,
+      your laughs, your crazy moments and your best stories.
+      <br><br>
+      <b>Bilal, this little website is just a reminder:</b><br>
+      good friends are rare, and the memories made with them are priceless. 🤝❤️
+    </p>
+
+    <div class="photos">
+      <img class="photo" src="images/bilal1.jpg" alt="Bilal">
+      <img class="photo" src="images/bilal2.jpg" alt="Bilal">
+    </div>
+
+    <div style="margin-top:25px">
+      <button onclick="surprise()">🎁 Open Surprise</button>
+      <button onclick="toggleMusic()">🎵 Play / Pause Music</button>
+      <div class="hidden-message" id="surprise">
+        ✨ Bilal, stay the same legend you are! ❤️<br>
+        <small>Friendship forever 🤝</small>
+      </div>
+      <div class="music-note">For music, place a file named <b>music.mp3</b> beside index.html.</div>
+    </div>
+  </section>
+
+  <footer>Made with ❤️ for Bilal</footer>
+</main>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const text="Memories change, but true friendship stays. ❤️";
+let i=0;
+function type(){
+  if(i<text.length){document.getElementById("typing").textContent+=text[i++];setTimeout(type,55)}
+}
+type();
+
+function surprise(){
+  const box=document.getElementById("surprise");
+  box.style.display="block";
+  for(let j=0;j<22;j++) makeHeart();
+}
+function makeHeart(){
+  const h=document.createElement("div");
+  h.textContent=["❤️","💖","💕","✨"][Math.floor(Math.random()*4)];
+  h.style.position="fixed";h.style.left=Math.random()*100+"vw";h.style.bottom="-30px";
+  h.style.fontSize=(16+Math.random()*24)+"px";h.style.zIndex=10;h.style.pointerEvents="none";
+  document.body.appendChild(h);
+  const duration=2200+Math.random()*1800;
+  h.animate([{transform:"translateY(0) rotate(0)",opacity:1},
+             {transform:`translateY(-${window.innerHeight+100}px) rotate(${Math.random()*360}deg)`,opacity:0}],
+             {duration,easing:"ease-out"});
+  setTimeout(()=>h.remove(),duration);
+}
+function toggleMusic(){
+  const m=document.getElementById("music");
+  if(m.paused)m.play().catch(()=>alert("Add music.mp3 to the website folder first."));
+  else m.pause();
+}
+
+// Floating particle background
+const c=document.getElementById("particles"),ctx=c.getContext("2d");
+let W,H,ps=[];
+function resize(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio)}
+function setup(){W=innerWidth;H=innerHeight;ps=Array.from({length:90},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+0.5,v:Math.random()*.35+.08,a:Math.random()}))}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ps.forEach(p=>{p.y-=p.v;if(p.y<0)p.y=H;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,190,225,${p.a})`;ctx.fill();
+  });
+  requestAnimationFrame(draw)
+}
+addEventListener("resize",setup);setup();draw();
+</script>
+</body>
+</html>
